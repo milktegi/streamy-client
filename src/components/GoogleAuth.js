@@ -19,10 +19,20 @@ class GoogleAuth extends Component {
 			})
 			.then(()=>{
 				this.auth = window.gapi.auth2.getAuthInstance();
-				this.setState({
-					isSignedIn: this.auth.isSignedIn.get()
-				})
+				// this.setState({
+				// 	isSignedIn: this.auth.isSignedIn.get()
+				// });
+				this.onAuthChange();
+				// 콜백 함수 
+				this.auth.isSignedIn.listen(this.onAuthChange);
 			})
+		})
+	}
+
+	// 유저 auth 업데이트를 핸들링
+	onAuthChange = () => {
+		this.setState({
+			isSignedIn: this.auth.isSignedIn.get()
 		})
 	}
 
