@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 
 class GoogleAuth extends Component {
 
+	//auth 상태 초기화
+	state = {
+		isSignedIn: null
+	}
+
 	componentDidMount(){
 		// 윈도우 써줘야 함
 		// 라이브러리가 성공적으로
@@ -12,13 +17,29 @@ class GoogleAuth extends Component {
 				clientId: '319997226357-rn7jm8d5t48eobp2lhqn1oqjam3n0ifc.apps.googleusercontent.com',
 				scope: 'email'
 			})
+			.then(()=>{
+				this.auth = window.gapi.auth2.getAuthInstance();
+				this.setState({
+					isSignedIn: this.auth.isSignedIn.get()
+				})
+			})
 		})
+	}
+
+	renderAuthButton(){
+		if(this.state.isSignedIn === null){
+			return <div>알 수 없음</div>
+		} else if(this.state.isSignedIn){
+			return <div>로그인 되었음</div>
+		} else {
+			return <div>로그인 안되있음</div>
+		}
 	}
 
 	render() {
 		return (
 			<div>
-				google auth
+				{this.renderAuthButton()}
 			</div>
 		)
 	}
