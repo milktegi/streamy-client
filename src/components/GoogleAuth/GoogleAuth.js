@@ -38,11 +38,29 @@ class GoogleAuth extends Component {
 
 	renderAuthButton(){
 		if(this.state.isSignedIn === null){
-			return <div>알 수 없음</div>
+			return null;
 		} else if(this.state.isSignedIn){
-			return <div>로그인 되었음</div>
+			return (
+				<button 
+			
+				className="ui red google button">
+					<i 
+					style={{ display: 'inline'}}
+					className="google icon">
+						{'     '}구글 계정으로 로그아웃
+					</i>
+				</button>
+			)
 		} else {
-			return <div>로그인 안되있음</div>
+			return (
+				<button 
+				style={{ display: 'inline'}}
+				className="ui red google button">
+					<i className="google icon">
+						{'     '}구글 계정으로 로그인
+					</i>
+				</button>
+			)
 		}
 	}
 
