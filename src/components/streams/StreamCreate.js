@@ -8,9 +8,10 @@ class StreamCreate extends React.Component {
     return <input {...input} />;
   };
 
-  onSubmit = formValues => {
+  onSubmit = userInput => {
     // e.preventDefault();
-    console.log(formValues);
+    // 여기서 action creator 호출 
+    console.log(userInput);
   }
 
   render() {
@@ -23,6 +24,20 @@ class StreamCreate extends React.Component {
       </form>
     );
   }
+}
+
+const validate = userInput => {
+
+const errors = {};
+
+   if(!userInput.title){
+// 유저 타이틀 미입력시에만 실행
+    errors.title = '타이틀 입력해주세요';
+   }
+   if(!userInput.description){
+     errors.description = '내용을 입력해주세요';
+   }
+   return errors;
 }
 
 export default reduxForm({
