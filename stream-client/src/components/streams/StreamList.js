@@ -7,10 +7,22 @@ class StreamList extends React.Component {
     this.props.fetchStreams();
   }
 
+  renderEditOrDelete = stream => {
+    if (stream.userId === this.props.currentUserId) {
+      return (
+        <div className="right floated content">
+          <button className="ui inverted blue button">수정</button>
+          <button className="ui inverted orange button">삭제</button>
+        </div>
+      );
+    }
+  };
+
   renderList = () => {
     return this.props.streams.map(el => {
       return (
         <div className="item" key={el.id}>
+          {this.renderEditOrDelete(el)}
           <i className="large middle aligned icon camera"> </i>
           <div className="content">
             {el.title}
@@ -31,11 +43,10 @@ class StreamList extends React.Component {
   }
 }
 
-// 스토어에 있는 객체를
-// 배열로 변경해서 리턴
 const mapStateToProps = state => {
   return {
-    streams: Object.values(state.streams)
+    streams: Object.values(state.streams),
+    currentUserId: state.auth.userId
   };
 };
 
