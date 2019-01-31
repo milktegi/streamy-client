@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchStreams } from '../../actions';
 
+import { Link } from 'react-router-dom';
+
 class StreamList extends React.Component {
   componentDidMount() {
     this.props.fetchStreams();
@@ -11,8 +13,8 @@ class StreamList extends React.Component {
     if (stream.userId === this.props.currentUserId) {
       return (
         <div className="right floated content">
-          <button className="ui inverted blue button">수정</button>
-          <button className="ui inverted orange button">삭제</button>
+          <button className="ui olive button">수정</button>
+          <button className="ui yellow button">삭제</button>
         </div>
       );
     }
@@ -33,11 +35,24 @@ class StreamList extends React.Component {
     });
   };
 
+  renderCreate = () => {
+    if(this.props.isSignedIn){
+      return (
+        <div>
+          <Link to="/streams/new" className="ui button primary">
+            CreateStream
+          </Link>
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
         <h2>스트림</h2>
         <div className="ui celled list">{this.renderList()}</div>
+        {this.renderCreate()}
       </div>
     );
   }
@@ -46,7 +61,8 @@ class StreamList extends React.Component {
 const mapStateToProps = state => {
   return {
     streams: Object.values(state.streams),
-    currentUserId: state.auth.userId
+    currentUserId: state.auth.userId,
+    isSignedIn: state.auth.isSignedIn
   };
 };
 
