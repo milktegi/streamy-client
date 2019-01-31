@@ -4,9 +4,9 @@ import { signIn, signOut } from '../../actions';
 
 class GoogleAuth extends Component {
   // //auth 상태 초기화
-  state = {
-    isSignedIn: null
-  };
+  // state = {
+  //   isSignedIn: null
+  // };
 
   componentDidMount() {
     // 윈도우 써줘야 함
@@ -41,7 +41,8 @@ class GoogleAuth extends Component {
   // 유저 auth 업데이트를 핸들링
   onAuthChange = (isSignedIn) => {
     if(isSignedIn){
-      this.props.signIn();
+      //유저 id값 
+      this.props.signIn(this.auth.currentUser.get().getId());
     } else {
       this.props.signOut();
     }
