@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from '../../actions';
 
 class GoogleAuth extends Component {
-  //auth 상태 초기화
-  state = {
-    isSignedIn: null
-  };
+  // //auth 상태 초기화
+  // state = {
+  //   isSignedIn: null
+  // };
 
   componentDidMount() {
     // 윈도우 써줘야 함
@@ -22,9 +22,7 @@ class GoogleAuth extends Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
-          // this.setState({
-          // 	isSignedIn: this.auth.isSignedIn.get()
-          // });
+         this.onAuthChange(this.auth.isSignedIn.get())
           this.onAuthChange();
           // 콜백 함수
           this.auth.isSignedIn.listen(this.onAuthChange);
@@ -41,16 +39,19 @@ class GoogleAuth extends Component {
   };
 
   // 유저 auth 업데이트를 핸들링
-  onAuthChange = () => {
-    this.setState({
-      isSignedIn: this.auth.isSignedIn.get()
-    });
+  onAuthChange = (isSignedIn) => {
+    if(isSignedIn){
+      //유저 id값 
+      this.props.signIn(this.auth.currentUser.get().getId());
+    } else {
+      this.props.signOut();
+    }
   };
 
   renderAuthButton() {
-    if (this.state.isSignedIn === null) {
+    if (this.props.isSignedIn === null) {
       return null;
-    } else if (this.state.isSignedIn) {
+    } else if (this.props.isSignedIn) {
       return (
         <button onClick={this.onSignOut} className="ui google plus button">
           <i name="google plus icon"></i>
@@ -72,7 +73,13 @@ class GoogleAuth extends Component {
   }
 }
 
-export default connect
-  null,
+const mapStateToProps = state => {
+  return {
+    isSignedIn: state.auth.isSignedIn
+  }
+}
+
+export default connect(
+  mapStateToProps,
   { signIn, signOut }
-(GoogleAuth);
+)(GoogleAuth);
