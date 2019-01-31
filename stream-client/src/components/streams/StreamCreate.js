@@ -3,6 +3,10 @@ import React from 'react';
 //redux-form
 import { Field, reduxForm } from 'redux-form';
 
+//actions
+import { connect } from 'react-redux';
+import { createStream } from '../../actions';
+
 class StreamCreate extends React.Component {
 
   renderError({ error, touched }){
@@ -41,6 +45,7 @@ class StreamCreate extends React.Component {
     // e.preventDefault();
     // 여기서 action creator 호출 
     console.log(userInput);
+    this.props.createStream(userInput);
   }
 
   render() {
@@ -74,7 +79,9 @@ const errors = {};
    return errors;
 }
 
-export default reduxForm({
+const formWrapped = reduxForm({
   form: 'streamCreate',
   validate
 })(StreamCreate);
+
+export default connect(null, { createStream })(formWrapped);
