@@ -26,8 +26,29 @@ export const signOut = () => {
 
 
 // form values
-export const createStream = userInput => async dispatch => {
-  const response = await streams.post('/streams', userInput);
+// 스토어에 있는 객체를
+// 배열로 변경해서 리턴
+// ++ userId속성을 추가해서 
+// 서버에 보낼 거임
+// getState는 현재 스토어 상태를 리턴
+/**
+ *  컴바인 리듀서에 있는 객체가
+ *  스토어의 프로퍼티 
+ *auth: authReducer,
+	form: formReducer,
+	streams: streamReducer 
+ * userId는 auth에 있으니까 
+  getState().auth.userId로 접근 가능
+ */
+export const createStream = userInput => async (dispatch, getState) => {
+
+  const { userId } = getState().auth;
+  const response = await streams.post('/streams', 
+   {
+     ...userInput,
+     userId
+   }
+  );
   dispatch({
     type: CREATE_STREAM,
     payload: response.data
