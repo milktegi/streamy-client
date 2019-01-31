@@ -1,19 +1,19 @@
-import streams from '../apis/streams';
+import streams from '../api/streams';
 import { SIGN_IN, SIGN_OUT } from './types';
 
 export const signIn = (userId) => {
   return {
-    type: 'SIGN_IN',
+    type: SIGN_IN,
     payload: userId
   };
 };
 export const signOut = () => {
   return {
-    type: 'SIGN_OUT'
+    type: SIGN_OUT
   };
 };
 
-// form values
-export const createStream = userInput => dispatch => {
+// handle form values
+export const createStream = userInput => async dispatch => {
   streams.post('/streams', userInput);
 }
