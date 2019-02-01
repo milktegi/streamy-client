@@ -1,18 +1,34 @@
+import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchStream } from '../../actions';
+import { fetchStream, editStream } from '../../actions';
+import StreamForm from './StreamForm';
 
 class StreamEdit extends React.Component {
-
   componentDidMount() {
- 
     this.props.fetchStream(this.props.match.params.id);
   }
+
+  //콜백
+  onSubmit = userInput => {
+    // console.log(userInput);
+    const { id } = this.props.match.params;
+    this.props.editStream(id, userInput);
+  };
+
   render() {
-    if (!this.props.stream) {
-      return <div>loading...</div>;
+    if (!this.props.item) {
+      return <div>loadidng...</div>;
     } else {
-      return <div>{this.props.stream.title}</div>;
+      return (
+        <div>
+          <h3> 스트림 수정 </h3>
+          <StreamForm
+            initialValues={_.pick(this.props.item, 'title', 'description')}
+            onSubmit={this.onSubmit}
+          />
+        </div>
+      );
     }
   }
 }
@@ -20,14 +36,13 @@ class StreamEdit extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   // console.log(ownProps);
   const { id } = ownProps.match.params;
-  console.log('맵스투', id);
 
   return {
-    stream: state.streams[id]
+    item: state.streams[id]
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchStream }
+  { fetchStream, editStream }
 )(StreamEdit);
