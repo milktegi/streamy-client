@@ -31,7 +31,10 @@ class StreamList extends React.Component {
           {this.renderEditOrDelete(el)}
           <i className="large middle aligned icon camera"> </i>
           <div className="content">
-            {el.title}
+            <Link to={`/streams/${el.id}`} className="header">
+               {el.title}
+            </Link>
+         
             <div className="description">{el.description}</div>
           </div>
         </div>
