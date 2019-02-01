@@ -80,11 +80,12 @@ export const fetchStream = (id) => async dispatch => {
 // 수정 
 // id랑 수정할 데이터 
 export const editStream = (id, userInput) => async dispatch => {
-  const response = await streams.put(`/streams/${id}`, userInput);
+  const response = await streams.patch(`/streams/${id}`, userInput);
   dispatch({
     type: EDIT_STREAM,
     payload: response.data
   })
+  history.push('/');
 } 
 
 // 삭제 
