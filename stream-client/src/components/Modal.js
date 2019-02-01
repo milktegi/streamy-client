@@ -5,17 +5,17 @@ import history from '../history';
 const Modal = props => {
   return ReactDOM.createPortal(
     <div
-      onClick={() => history.push('/')}
+		  style={{ 'backgroundColor' : 'rgba(0,0,0,.55)'}}
+      onClick={props.onDismiss}
       className="ui dimmer modals visiable active"
     >
       <div 
 			onClick={(e) => e.stopPropagation()}
 			className="ui standard modal visible active">
-        <div className="header">스트림 삭제</div>
-        <div className="content">해당 게시물을 삭제하시겠습니까?</div>
+        <div className="header">{props.title}</div>
+        <div className="content">{props.content}</div>
         <div className="actions">
-          <button className="ui primary button">삭제</button>
-          <button className="ui button">취소</button>
+					{props.actions}
         </div>
       </div>
     </div>,
