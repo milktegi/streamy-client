@@ -97,4 +97,5 @@ export const deleteStream = (id) => async dispatch => {
     type: DELETE_STREAM,
     payload: id
   })
+    history.push('/');
 } 
