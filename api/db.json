@@ -1,3 +1,16 @@
 {
-  "streams": []
+  "streams": [
+    {
+      "title": "안녕",
+      "description": "ㅇㅇ",
+      "userId": "101457345574042051274",
+      "id": 1
+    },
+    {
+      "title": "내용을",
+      "description": "textarea로 해야되지 않겠냐",
+      "userId": "101457345574042051274",
+      "id": 2
+    }
+  ]
 }
